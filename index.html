@@ -1,370 +1,362 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <title>Murcia Surf Brain</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <style>
+    <meta charset="UTF-8" />
+    <title>Murcia Surf Brain</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
     :root {
-      --bg: #020817;
-      --bg-alt: #04101f;
-      --primary: #00c2ff;
-      --accent: #ff7a3c;
-      --good: #32d399;
-      --regular: #ffcc33;
-      --bad: #ff4b5c;
-      --text: #e5f1fb;
-      --muted: #90a4c4;
-      --card: #050f20;
-      --border: #123055;
-      --shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+        --bg: #020817;
+        --bg-alt: #04101f;
+        --primary: #00c2ff;
+        --accent: #ff7a3c;
+        --good: #32d399;
+        --regular: #ffcc33;
+        --bad: #ff4b5c;
+        --text: #e5f1fb;
+        --muted: #90a4c4;
+        --card: #050f20;
+        --border: #123055;
+        --shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top, #052041 0, #020817 45%, #01040b 100%);
-      color: var(--text);
-      min-height: 100vh;
-      display: flex;
-      align-items: stretch;
-      justify-content: center;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
+        background: radial-gradient(circle at top, #052041 0, #020817 45%, #01040b 100%);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        align-items: stretch;
+        justify-content: center;
     }
 
     .ocean-bg {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      overflow: hidden;
-      z-index: -1;
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+        z-index: -1;
     }
 
     .ocean-wave {
-      position: absolute;
-      width: 200%;
-      height: 200%;
-      background:
-        radial-gradient(circle at 20% 20%, rgba(0, 194, 255, 0.12) 0, transparent 50%),
-        radial-gradient(circle at 80% 0%, rgba(0, 255, 213, 0.08) 0, transparent 55%),
-        radial-gradient(circle at 50% 80%, rgba(0, 157, 255, 0.15) 0, transparent 55%);
-      animation: drift 30s linear infinite;
-      opacity: 0.65;
+        position: absolute;
+        width: 200%;
+        height: 200%;
+        background:
+            radial-gradient(circle at 20% 20%, rgba(0, 194, 255, 0.12) 0, transparent 50%),
+            radial-gradient(circle at 80% 0%, rgba(0, 255, 213, 0.08) 0, transparent 55%),
+            radial-gradient(circle at 50% 80%, rgba(0, 157, 255, 0.15) 0, transparent 55%);
+        animation: drift 30s linear infinite;
+        opacity: 0.65;
     }
 
     @keyframes drift {
-      0%   { transform: translate3d(-10%, -10%, 0) scale(1.05); }
-      50%  { transform: translate3d(10%, 10%, 0) scale(1.1); }
-      100% { transform: translate3d(-10%, -10%, 0) scale(1.05); }
+        from { transform: translate(-25%, -25%) rotate(0deg); }
+        to { transform: translate(-25%, -25%) rotate(360deg); }
     }
 
-    .grain {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: -1;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 160 160' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='noStitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.28'/%3E%3C/svg%3E");
-      mix-blend-mode: soft-light;
+    .container {
+        width: 100%;
+        max-width: 1400px;
+        padding: 2rem;
+        position: relative;
+        z-index: 1;
     }
-
-    .app {
-      width: 100%;
-      max-width: 1220px;
-      padding: 24px 16px;
-    }
-
-    .shell {
-      display: grid;
-      grid-template-columns: minmax(0, 2.1fr) minmax(0, 2.4fr);
-      gap: 20px;
-      background: linear-gradient(135deg, rgba(4, 16, 31, 0.95), rgba(1, 4, 16, 0.98));
-      border-radius: 20px;
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(0, 194, 255, 0.18);
-      padding: 18px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    @media (max-width: 900px) {
-      .shell { grid-template-columns: minmax(0, 1fr); padding: 16px; }
-    }
-
-    .shell::before {
-      content: "";
-      position: absolute;
-      inset: -100px;
-      background: radial-gradient(circle at top left, rgba(0, 212, 255, 0.12) 0, transparent 60%);
-      opacity: 0.7;
-      pointer-events: none;
-    }
-
-    .left, .right { position: relative; z-index: 1; }
 
     header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 16px;
-      gap: 12px;
+        text-align: center;
+        margin-bottom: 3rem;
     }
 
-    .brand { display: flex; align-items: center; gap: 8px; }
-
-    .logo {
-      width: 34px;
-      height: 34px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, #ffffff, #ffb347 32%, #ff7a3c 55%, #ff3b77 80%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 0 18px rgba(255, 122, 60, 0.8);
-      position: relative;
-      overflow: hidden;
+    h1 {
+        font-size: 3rem;
+        font-weight: 700;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 0.5rem;
     }
 
-    .logo::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 50% 90%, rgba(2, 8, 23, 0.9) 0, transparent 38%);
+    .subtitle {
+        color: var(--muted);
+        font-size: 1.1rem;
     }
 
-    .logo-icon {
-      position: relative;
-      width: 22px;
-      height: 22px;
-      border-radius: 40% 90% 35% 90%;
-      border: 2px solid rgba(255, 255, 255, 0.85);
-      border-left-width: 4px;
-      border-bottom-width: 4px;
-      transform: rotate(-18deg) translateY(2px);
-      box-shadow: 0 0 10px rgba(255, 255, 255, 0.6);
+    .best-spot {
+        background: var(--card);
+        border: 2px solid var(--primary);
+        border-radius: 20px;
+        padding: 2rem;
+        margin-bottom: 2rem;
+        box-shadow: var(--shadow);
+        text-align: center;
     }
 
-    .brand-text { display: flex; flex-direction: column; gap: 2px; }
-
-    .brand-title {
-      font-weight: 700;
-      letter-spacing: 0.04em;
-      font-size: 1.05rem;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 4px;
+    .best-spot h2 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
     }
 
-    .brand-pill {
-      font-size: 0.7rem;
-      padding: 3px 7px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, rgba(0, 194, 255, 0.24), rgba(0, 255, 182, 0.18));
-      border: 1px solid rgba(0, 194, 255, 0.4);
-      text-transform: uppercase;
+    .best-spot .spot-name {
+        font-size: 2rem;
+        font-weight: 700;
+        margin: 1rem 0;
     }
 
-    .brand-sub { font-size: 0.75rem; color: var(--muted); }
-
-    .controls {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 8px;
-      font-size: 0.8rem;
+    .score {
+        display: inline-block;
+        font-size: 2.5rem;
+        font-weight: 900;
+        padding: 0.5rem 1.5rem;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--good), #20b888);
+        color: #000;
     }
 
-    .chip {
-      padding: 5px 9px;
-      border-radius: 999px;
-      border: 1px solid rgba(0, 194, 255, 0.38);
-      background: radial-gradient(circle at top, rgba(0, 194, 255, 0.2) 0, rgba(2, 8, 23, 0.9) 60%);
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      color: var(--text);
+    .spots-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
     }
 
-    .chip-dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: var(--good);
-      box-shadow: 0 0 10px rgba(50, 211, 153, 0.8);
+    .spot-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 16px;
+        padding: 1.5rem;
+        box-shadow: var(--shadow);
+        transition: transform 0.2s, box-shadow 0.2s;
     }
 
-    .chip-refresh {
-      cursor: pointer;
-      transition: transform 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
+    .spot-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 24px 50px rgba(0, 0, 0, 0.7);
     }
 
-    .chip-refresh:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 0 12px rgba(0, 194, 255, 0.7);
-      background: radial-gradient(circle at top, rgba(0, 194, 255, 0.32) 0, rgba(2, 8, 23, 0.9) 60%);
+    .spot-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 1rem;
+        color: var(--primary);
     }
 
-    .chip-icon {
-      width: 15px;
-      height: 15px;
-      border-radius: 999px;
-      border: 1px solid rgba(0, 194, 255, 0.7);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
-      color: var(--primary);
-      background: rgba(1, 11, 23, 0.9);
+    .spot-score {
+        font-size: 2rem;
+        font-weight: 900;
+        margin-bottom: 1rem;
+        padding: 0.3rem 1rem;
+        border-radius: 8px;
+        display: inline-block;
     }
 
-    .section {
-      background: radial-gradient(circle at top left, #07172b 0, #050f20 45%, #04081a 100%);
-      border-radius: 16px;
-      padding: 14px 14px 12px;
-      border: 1px solid rgba(11, 36, 74, 0.9);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
-      margin-bottom: 10px;
+    .score-good { background: var(--good); color: #000; }
+    .score-regular { background: var(--regular); color: #000; }
+    .score-bad { background: var(--bad); color: #fff; }
+
+    .data-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 0.5rem 0;
+        border-bottom: 1px solid var(--border);
     }
 
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 6px;
+    .data-row:last-child {
+        border-bottom: none;
     }
 
-    .section-title {
-      font-size: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 6px;
+    .data-label {
+        color: var(--muted);
+        font-size: 0.9rem;
     }
 
-    .section-title-pill {
-      width: 12px;
-      height: 12px;
-      border-radius: 999px;
-      background: conic-gradient(from 210deg, #00c2ff, #00ffb6, #ffcc33, #ff7a3c, #00c2ff);
-      box-shadow: 0 0 10px rgba(0, 194, 255, 0.7);
+    .data-value {
+        font-weight: 600;
+        color: var(--text);
     }
 
-    .section-subtitle { font-size: 0.78rem; color: var(--muted); }
-
-    .hero {
-      display: grid;
-      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.2fr);
-      gap: 14px;
-      align-items: stretch;
+    .refresh-info {
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.9rem;
+        padding: 1rem;
     }
 
-    @media (max-width: 600px) {
-      .hero { grid-template-columns: minmax(0, 1fr); }
+    .loading {
+        text-align: center;
+        padding: 3rem;
+        font-size: 1.2rem;
+        color: var(--primary);
     }
 
-    .hero-main {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 10px;
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
     }
 
-    .hero-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.78rem;
-      padding: 4px 9px;
-      border-radius: 999px;
-      background: rgba(2, 17, 34, 0.9);
-      border: 1px solid rgba(0, 194, 255, 0.6);
-      box-shadow: 0 0 14px rgba(0, 194, 255, 0.45);
+    .loading {
+        animation: pulse 1.5s ease-in-out infinite;
     }
 
-    .hero-badge-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: radial-gradient(circle at 30% 30%, #ffffff, #ff7a3c 45%, #ff3b77 100%);
-      box-shadow: 0 0 12px rgba(255, 122, 60, 0.85);
+    @media (max-width: 768px) {
+        h1 { font-size: 2rem; }
+        .container { padding: 1rem; }
+        .spots-grid { grid-template-columns: 1fr; }
+    }
+    </style>
+</head>
+<body>
+    <div class="ocean-bg">
+        <div class="ocean-wave"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1>🏄‍♂️ Murcia Surf Brain</h1>
+            <p class="subtitle">Predicción en tiempo real de las mejores condiciones de surf en Murcia</p>
+        </header>
+
+        <div id="app">
+            <div class="loading">Cargando datos de surf...</div>
+        </div>
+
+        <div class="refresh-info">
+            Actualizado: <span id="lastUpdate">--</span> | Próxima actualización en 30 min
+        </div>
+    </div>
+
+    <script>
+    const beaches = [
+        { name: 'Playa de Salinas', lat: 37.697, lon: -0.849, region: 'Calblanque' },
+        { name: 'Calamagre', lat: 37.682, lon: -0.827, region: 'Calblanque' },
+        { name: 'Negrete', lat: 37.673, lon: -0.819, region: 'Calblanque' },
+        { name: 'Playa del Lastre', lat: 37.598, lon: -0.868, region: 'Portmán' },
+        { name: 'Playa del Gorguel', lat: 37.577, lon: -0.887, region: 'La Unión' },
+        { name: 'Playa de Galúa', lat: 37.627, lon: -0.758, region: 'La Manga' },
+        { name: 'La Raja', lat: 37.635, lon: -0.744, region: 'La Manga' },
+        { name: 'Amoladeras', lat: 37.643, lon: -0.736, region: 'La Manga' }
+    ];
+
+    async function fetchWeatherData(lat, lon) {
+        try {
+            const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,wind_speed_10m,wind_direction_10m&hourly=wave_height,wave_direction,wave_period&timezone=Europe/Madrid`;
+            const response = await fetch(url);
+            return await response.json();
+        } catch (error) {
+            console.error('Error fetching weather:', error);
+            return null;
+        }
     }
 
-    .hero-title {
-      font-size: 1.4rem;
-      font-weight: 700;
-      letter-spacing: 0.02em;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      align-items: baseline;
+    function calculateSurfScore(data) {
+        if (!data || !data.hourly) return 0;
+        
+        const waveHeight = data.hourly.wave_height[0] || 0;
+        const wavePeriod = data.hourly.wave_period[0] || 0;
+        const windSpeed = data.current.wind_speed_10m || 0;
+        
+        let score = 0;
+        
+        if (waveHeight >= 0.8 && waveHeight <= 2.5) score += 40;
+        else if (waveHeight > 0.5) score += 20;
+        
+        if (wavePeriod >= 8) score += 30;
+        else if (wavePeriod >= 6) score += 15;
+        
+        if (windSpeed <= 15) score += 30;
+        else if (windSpeed <= 25) score += 15;
+        
+        return Math.min(score, 100);
     }
 
-    .hero-title span.accent { color: var(--accent); }
-    .hero-title span.spot { color: var(--primary); }
-
-    .hero-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      font-size: 0.8rem;
-      color: var(--muted);
+    function getScoreClass(score) {
+        if (score >= 70) return 'score-good';
+        if (score >= 40) return 'score-regular';
+        return 'score-bad';
     }
 
-    .hero-meta-item { display: inline-flex; align-items: center; gap: 4px; }
-
-    .hero-meta-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 999px;
-      background: var(--primary);
+    function getScoreText(score) {
+        if (score >= 70) return 'Excelente';
+        if (score >= 40) return 'Aceptable';
+        return 'Pobre';
     }
 
-    .hero-pill-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-      font-size: 0.76rem;
+    async function updateSurfData() {
+        const app = document.getElementById('app');
+        app.innerHTML = '<div class="loading">Cargando datos...</div>';
+        
+        const results = [];
+        
+        for (const beach of beaches) {
+            const data = await fetchWeatherData(beach.lat, beach.lon);
+            const score = calculateSurfScore(data);
+            
+            results.push({
+                beach,
+                data,
+                score,
+                waveHeight: data?.hourly?.wave_height[0] || 0,
+                wavePeriod: data?.hourly?.wave_period[0] || 0,
+                windSpeed: data?.current?.wind_speed_10m || 0,
+                windDir: data?.current?.wind_direction_10m || 0
+            });
+        }
+        
+        results.sort((a, b) => b.score - a.score);
+        const best = results[0];
+        
+        let html = `
+            <div class="best-spot">
+                <h2>🌊 Mejor Spot Ahora</h2>
+                <div class="spot-name">${best.beach.name}</div>
+                <div class="score">${best.score}/100</div>
+                <p style="margin-top: 1rem; color: var(--muted);">${best.beach.region}</p>
+            </div>
+            
+            <div class="spots-grid">
+        `;
+        
+        for (const result of results) {
+            html += `
+                <div class="spot-card">
+                    <h3>${result.beach.name}</h3>
+                    <div class="spot-score ${getScoreClass(result.score)}">
+                        ${result.score}/100
+                    </div>
+                    <div style="margin: 1rem 0; color: var(--muted); font-size: 0.9rem;">
+                        ${getScoreText(result.score)}
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Altura olas</span>
+                        <span class="data-value">${result.waveHeight.toFixed(1)} m</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Periodo</span>
+                        <span class="data-value">${result.wavePeriod.toFixed(0)} s</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Viento</span>
+                        <span class="data-value">${result.windSpeed.toFixed(0)} km/h</span>
+                    </div>
+                    <div class="data-row">
+                        <span class="data-label">Dirección viento</span>
+                        <span class="data-value">${result.windDir.toFixed(0)}°</span>
+                    </div>
+                </div>
+            `;
+        }
+        
+        html += '</div>';
+        app.innerHTML = html;
+        
+        document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('es-ES');
     }
 
-    .hero-pill {
-      padding: 3px 8px;
-      border-radius: 999px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(3, 19, 40, 0.8);
-      color: var(--muted);
-    }
-
-    .hero-cta {
-      margin-top: 4px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .hero-cta-btn {
-      border-radius: 999px;
-      padding: 6px 12px;
-      border: none;
-      background: linear-gradient(135deg, #00c2ff, #00ffb6);
-      color: #020817;
-      font-weight: 600;
-      font-size: 0.82rem;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 10px 20px rgba(0, 194, 255, 0.6);
-      transform: translateY(0);
-      transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
-    }
-
-    .hero-cta-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 14px 26px rgba(0, 194, 255, 0.7);
-      filter: brightness(1.05);
-    }
-
-    .hero
+    updateSurfData();
+    setInterval(updateSurfData, 30 * 60 * 1000);
+    </script>
+</body>
+</html>
