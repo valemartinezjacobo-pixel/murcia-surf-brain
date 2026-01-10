@@ -3,13 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Murcia Surf Brain</title>
-    <style>
+    <title>Cabo Palos Surfing Report</title>    <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 25%, #fdc830 50%, #f37335 75%, #ff6b6b 100%);            min-height: 100vh;
             padding: 20px;
         }
         .container {
@@ -120,9 +118,15 @@
         <p class="subtitle">Predicción en tiempo real de surf para las playas de Murcia</p>
         <div id="app">
             <div class="loading">Cargando datos...</div>
-        </div>
-        <div class="update-time" id="updateTime"></div>
+        <h1>🏄‍♂️ CABO PALOS SURFING REPORT 🌊</h1>        <div class="update-time" id="updateTime"></div>
     </div>
+                <div style="margin-top: 40px; text-align: center; color: rgba(255,255,255,0.9); padding: 20px; background: rgba(0,0,0,0.2); border-radius: 15px;">
+            <p style="margin-bottom: 15px; font-size: 1.1em;">📧 Contacto: <a href="mailto:garavide@hotmail.com" style="color: #fdc830; text-decoration: none; font-weight: bold;">garavide@hotmail.com</a></p>
+            <div style="margin-top: 20px;">
+                <p style="margin-bottom: 10px; font-weight: bold;">🌊 Visitas totales:</p>
+                <img src="https://hitwebcounter.com/counter/counter.php?page=13732796&style=0036&nbdigits=6&type=page&initCount=0" title="Contador de visitas" Alt="Web Hits" border="0" />
+            </div>
+        </div>
 
     <script>
         const beaches = [
@@ -142,6 +146,7 @@
                 const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m,wind_direction_10m&timezone=Europe/Madrid`;
                 const weatherRes = await fetch(weatherUrl);
                 const weatherData = await weatherRes.json();
+                                console.log('Weather data:', weatherData);
 
                 // Obtener datos de olas
                 const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&current=wave_height,wave_direction,wave_period&timezone=Europe/Madrid`;
