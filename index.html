@@ -301,6 +301,7 @@
                                 windSpeed: data?.current?.wind_speed_10m || 0,
                                 windDir: data?.current?.wind_direction_10m || 0
             });
+                    }
         results.sort((a, b) => b.score - a.score);
                     const best = results[0];
         
