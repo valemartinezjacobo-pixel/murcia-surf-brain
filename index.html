@@ -1,359 +1,274 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Murcia Surf Brain</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-    :root {
-        --bg: #020817;
-        --bg-alt: #04101f;
-        --primary: #00c2ff;
-        --accent: #ff7a3c;
-        --good: #32d399;
-        --regular: #ffcc33;
-        --bad: #ff4b5c;
-        --text: #e5f1fb;
-        --muted: #90a4c4;
-        --card: #050f20;
-        --border: #123055;
-        --shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
-    }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-
-    body {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", sans-serif;
-        background: radial-gradient(circle at top, #052041 0, #020817 45%, #01040b 100%);
-        color: var(--text);
-        min-height: 100vh;
-        display: flex;
-        align-items: stretch;
-        justify-content: center;
-    }
-
-    .ocean-bg {
-        position: fixed;
-        inset: 0;
-        pointer-events: none;
-        overflow: hidden;
-        z-index: -1;
-    }
-
-    .ocean-wave {
-        position: absolute;
-        width: 200%;
-        height: 200%;
-        background:
-            radial-gradient(circle at 20% 20%, rgba(0, 194, 255, 0.12) 0, transparent 50%),
-            radial-gradient(circle at 80% 0%, rgba(0, 255, 213, 0.08) 0, transparent 55%),
-            radial-gradient(circle at 50% 80%, rgba(0, 157, 255, 0.15) 0, transparent 55%);
-        animation: drift 30s linear infinite;
-        opacity: 0.65;
-    }
-
-    @keyframes drift {
-        from { transform: translate(-25%, -25%) rotate(0deg); }
-        to { transform: translate(-25%, -25%) rotate(360deg); }
-    }
-
-    .container {
-        width: 100%;
-        max-width: 1400px;
-        padding: 2rem;
-        position: relative;
-        z-index: 1;
-    }
-
-    header {
-        text-align: center;
-        margin-bottom: 3rem;
-    }
-
-    h1 {
-        font-size: 3rem;
-        font-weight: 700;
-        background: linear-gradient(135deg, var(--primary), var(--accent));
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        margin-bottom: 0.5rem;
-    }
-
-    .subtitle {
-        color: var(--muted);
-        font-size: 1.1rem;
-    }
-
-    .best-spot {
-        background: var(--card);
-        border: 2px solid var(--primary);
-        border-radius: 20px;
-        padding: 2rem;
-        margin-bottom: 2rem;
-        box-shadow: var(--shadow);
-        text-align: center;
-    }
-
-    .best-spot h2 {
-        font-size: 1.5rem;
-        margin-bottom: 0.5rem;
-        color: var(--primary);
-    }
-
-    .best-spot .spot-name {
-        font-size: 2rem;
-        font-weight: 700;
-        margin: 1rem 0;
-    }
-
-    .score {
-        display: inline-block;
-        font-size: 2.5rem;
-        font-weight: 900;
-        padding: 0.5rem 1.5rem;
-        border-radius: 12px;
-        background: linear-gradient(135deg, var(--good), #20b888);
-        color: #000;
-    }
-
-    .spots-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .spot-card {
-        background: var(--card);
-        border: 1px solid var(--border);
-        border-radius: 16px;
-        padding: 1.5rem;
-        box-shadow: var(--shadow);
-        transition: transform 0.2s, box-shadow 0.2s;
-    }
-
-    .spot-card:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 24px 50px rgba(0, 0, 0, 0.7);
-    }
-
-    .spot-card h3 {
-        font-size: 1.3rem;
-        margin-bottom: 1rem;
-        color: var(--primary);
-    }
-
-    .spot-score {
-        font-size: 2rem;
-        font-weight: 900;
-        margin-bottom: 1rem;
-        padding: 0.3rem 1rem;
-        border-radius: 8px;
-        display: inline-block;
-    }
-
-    .score-good { background: var(--good); color: #000; }
-    .score-regular { background: var(--regular); color: #000; }
-    .score-bad { background: var(--bad); color: #fff; }
-
-    .data-row {
-        display: flex;
-        justify-content: space-between;
-        padding: 0.5rem 0;
-        border-bottom: 1px solid var(--border);
-    }
-
-    .data-row:last-child {
-        border-bottom: none;
-    }
-
-    .data-label {
-        color: var(--muted);
-        font-size: 0.9rem;
-    }
-
-    .data-value {
-        font-weight: 600;
-        color: var(--text);
-    }
-
-    .refresh-info {
-        text-align: center;
-        color: var(--muted);
-        font-size: 0.9rem;
-        padding: 1rem;
-    }
-
-    .loading {
-        text-align: center;
-        padding: 3rem;
-        font-size: 1.2rem;
-        color: var(--primary);
-    }
-
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-    }
-
-    .loading {
-        animation: pulse 1.5s ease-in-out infinite;
-    }
-
-    @media (max-width: 768px) {
-        h1 { font-size: 2rem; }
-        .container { padding: 1rem; }
-        .spots-grid { grid-template-columns: 1fr; }
-    }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 2.5em;
+        }
+        .subtitle {
+            color: rgba(255,255,255,0.9);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .best-spot {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .best-spot h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .best-spot .name {
+            font-size: 2em;
+            font-weight: bold;
+            color: #333;
+            margin: 10px 0;
+        }
+        .score {
+            font-size: 3em;
+            font-weight: bold;
+            color: #4CAF50;
+            margin: 20px 0;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        .card h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+        }
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .data-row:last-child {
+            border-bottom: none;
+        }
+        .label {
+            color: #666;
+        }
+        .value {
+            font-weight: bold;
+            color: #333;
+        }
+        .loading {
+            color: white;
+            text-align: center;
+            font-size: 1.5em;
+            margin: 50px 0;
+        }
+        .error {
+            background: #f44336;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+        .score-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .score-good { background: #4CAF50; color: white; }
+        .score-ok { background: #FFC107; color: white; }
+        .score-bad { background: #f44336; color: white; }
+        .update-time {
+            color: rgba(255,255,255,0.8);
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
     </style>
 </head>
 <body>
-    <div class="ocean-bg">
-        <div class="ocean-wave"></div>
-    </div>
-
     <div class="container">
-        <header>
-            <h1>🏄‍♂️ Murcia Surf Brain</h1>
-            <p class="subtitle">Predicción en tiempo real de las mejores condiciones de surf en Murcia</p>
-        </header>
-
+        <h1>🏄‍♂️ Murcia Surf Brain</h1>
+        <p class="subtitle">Predicción en tiempo real de surf para las playas de Murcia</p>
         <div id="app">
-            <div class="loading">Cargando datos de surf...</div>
+            <div class="loading">Cargando datos...</div>
         </div>
-
-        <div class="refresh-info">
-            Actualizado: <span id="lastUpdate">--</span> | Próxima actualización en 30 min
-        </div>
+        <div class="update-time" id="updateTime"></div>
     </div>
 
     <script>
-    const beaches = [
-        { name: 'Playa de Salinas', lat: 37.697, lon: -0.849, region: 'Calblanque' },
-        { name: 'Calamagre', lat: 37.682, lon: -0.827, region: 'Calblanque' },
-        { name: 'Negrete', lat: 37.673, lon: -0.819, region: 'Calblanque' },
-        { name: 'Playa del Lastre', lat: 37.598, lon: -0.868, region: 'Portmán' },
-        { name: 'Playa del Gorguel', lat: 37.577, lon: -0.887, region: 'La Unión' },
-        { name: 'Playa de Galúa', lat: 37.627, lon: -0.758, region: 'La Manga' },
-        { name: 'La Raja', lat: 37.635, lon: -0.744, region: 'La Manga' },
-        { name: 'Amoladeras', lat: 37.643, lon: -0.736, region: 'La Manga' }
-    ];
+        const beaches = [
+            { name: 'Playa de Salinas', lat: 37.697, lon: -0.849, region: 'Calblanque' },
+            { name: 'Calamagre', lat: 37.682, lon: -0.827, region: 'Calblanque' },
+            { name: 'Negrete', lat: 37.673, lon: -0.819, region: 'Calblanque' },
+            { name: 'Playa del Lastre', lat: 37.598, lon: -0.868, region: 'Portmán' },
+            { name: 'Playa del Gorguel', lat: 37.577, lon: -0.887, region: 'La Unión' },
+            { name: 'Playa de Galúa', lat: 37.627, lon: -0.758, region: 'La Manga' },
+            { name: 'La Raja', lat: 37.635, lon: -0.744, region: 'La Manga' },
+            { name: 'Amoladeras', lat: 37.643, lon: -0.736, region: 'La Manga' }
+        ];
 
-    async function fetchWeatherData(lat, lon) {
-        try {
-            const url = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&current=wave_height,wave_direction,wave_period,wind_wave_height,wind_wave_direction,wind_wave_period&hourly=wave_height,wave_direction,wave_period&timezone=Europe/Madrid`;            const response = await fetch(url);
-            return await response.json();
-        } catch (error) {
-            console.error('Error fetching weather:', error);
-            return null;
+        async function fetchData(lat, lon) {
+            try {
+                // Obtener datos de viento
+                const weatherUrl = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=wind_speed_10m,wind_direction_10m&timezone=Europe/Madrid`;
+                const weatherRes = await fetch(weatherUrl);
+                const weatherData = await weatherRes.json();
+
+                // Obtener datos de olas
+                const marineUrl = `https://marine-api.open-meteo.com/v1/marine?latitude=${lat}&longitude=${lon}&current=wave_height,wave_direction,wave_period&timezone=Europe/Madrid`;
+                const marineRes = await fetch(marineUrl);
+                const marineData = await marineRes.json();
+
+                return {
+                    waveHeight: marineData.current?.wave_height || 0,
+                    wavePeriod: marineData.current?.wave_period || 0,
+                    waveDirection: marineData.current?.wave_direction || 0,
+                    windSpeed: weatherData.current?.wind_speed_10m || 0,
+                    windDirection: weatherData.current?.wind_direction_10m || 0
+                };
+            } catch (error) {
+                console.error('Error:', error);
+                return {
+                    waveHeight: 0,
+                    wavePeriod: 0,
+                    waveDirection: 0,
+                    windSpeed: 0,
+                    windDirection: 0
+                };
+            }
         }
-    }
 
-    function calculateSurfScore(data) {
-        if (!data || !data.current) return 0;        
-        const windSpeed = data.current.wind_speed_10m || 0;
-                const waveHeight = data.current.wave_height || 0;
-        const wavePeriod = data.current.wave_period || 0;
-        
-        let score = 0;
-        
-        if (waveHeight >= 0.8 && waveHeight <= 2.5) score += 40;
-        else if (waveHeight > 0.5) score += 20;
-        
-        if (wavePeriod >= 8) score += 30;
-        else if (wavePeriod >= 6) score += 15;
-        
-        if (windSpeed <= 15) score += 30;
-        else if (windSpeed <= 25) score += 15;
-        
-        return Math.min(score, 100);
-    }
-
-    function getScoreClass(score) {
-        if (score >= 70) return 'score-good';
-        if (score >= 40) return 'score-regular';
-        return 'score-bad';
-    }
-
-    function getScoreText(score) {
-        if (score >= 70) return 'Excelente';
-        if (score >= 40) return 'Aceptable';
-        return 'Pobre';
-    }
-
-    async function updateSurfData() {
-        const app = document.getElementById('app');
-        app.innerHTML = '<div class="loading">Cargando datos...</div>';
-        
-        const results = [];
-        
-        for (const beach of beaches) {
-            const data = await fetchWeatherData(beach.lat, beach.lon);
-            const score = calculateSurfScore(data);
+        function calculateScore(data) {
+            let score = 0;
             
-            results.push({
-                beach,
-                data,
-                score,
-                                waveHeight: data?.current?.wave_height || 0,
-                wavePeriod: data?.current?.wave_period || 0,
-                                windSpeed: data?.current?.wind_speed_10m || 0,
-                                windDir: data?.current?.wind_direction_10m || 0
-            });
-                    }
-        results.sort((a, b) => b.score - a.score);
-                    const best = results[0];
-        
-        let html = `
-            <div class="best-spot">
-                <h2>🌊 Mejor Spot Ahora</h2>
-                <div class="spot-name">${best.beach.name}</div>
-                <div class="score">${best.score}/100</div>
-                <p style="margin-top: 1rem; color: var(--muted);">${best.beach.region}</p>
-            </div>
+            // Puntuación por altura de olas (máximo 40 puntos)
+            if (data.waveHeight >= 0.8 && data.waveHeight <= 2.5) score += 40;
+            else if (data.waveHeight > 0.5) score += 20;
             
-            <div class="spots-grid">
-        `;
-        
-        for (const result of results) {
-            html += `
-                <div class="spot-card">
-                    <h3>${result.beach.name}</h3>
-                    <div class="spot-score ${getScoreClass(result.score)}">
-                        ${result.score}/100
-                    </div>
-                    <div style="margin: 1rem 0; color: var(--muted); font-size: 0.9rem;">
-                        ${getScoreText(result.score)}
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">Altura olas</span>
-                        <span class="data-value">${result.waveHeight.toFixed(1)} m</span>
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">Periodo</span>
-                        <span class="data-value">${result.wavePeriod.toFixed(0)} s</span>
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">Viento</span>
-                        <span class="data-value">${result.windSpeed.toFixed(0)} km/h</span>
-                    </div>
-                    <div class="data-row">
-                        <span class="data-label">Dirección viento</span>
-                        <span class="data-value">${result.windDir.toFixed(0)}°</span>
-                    </div>
-                </div>
-            `;
+            // Puntuación por periodo (máximo 30 puntos)
+            if (data.wavePeriod >= 8) score += 30;
+            else if (data.wavePeriod >= 6) score += 15;
+            
+            // Puntuación por viento (máximo 30 puntos)
+            if (data.windSpeed <= 15) score += 30;
+            else if (data.windSpeed <= 25) score += 15;
+            
+            return Math.min(score, 100);
         }
-        
-        html += '</div>';
-        app.innerHTML = html;
-        
-        document.getElementById('lastUpdate').textContent = new Date().toLocaleTimeString('es-ES');
-    }
 
-    updateSurfData();
-    setInterval(updateSurfData, 30 * 60 * 1000);
+        function getScoreClass(score) {
+            if (score >= 70) return 'score-good';
+            if (score >= 40) return 'score-ok';
+            return 'score-bad';
+        }
+
+        function getScoreText(score) {
+            if (score >= 70) return '✅ Excelente';
+            if (score >= 40) return '👍 Aceptable';
+            return '❌ Pobre';
+        }
+
+        async function updateData() {
+            try {
+                const app = document.getElementById('app');
+                app.innerHTML = '<div class="loading">Cargando datos...</div>';
+
+                const results = [];
+                
+                for (const beach of beaches) {
+                    const data = await fetchData(beach.lat, beach.lon);
+                    const score = calculateScore(data);
+                    results.push({ beach, data, score });
+                }
+
+                results.sort((a, b) => b.score - a.score);
+                const best = results[0];
+
+                let html = `
+                    <div class="best-spot">
+                        <h2>🌊 Mejor Spot Ahora</h2>
+                        <div class="name">${best.beach.name}</div>
+                        <div class="score">${best.score}/100</div>
+                        <div class="score-badge ${getScoreClass(best.score)}">
+                            ${getScoreText(best.score)}
+                        </div>
+                        <p style="color: #666; margin-top: 10px;">${best.beach.region}</p>
+                    </div>
+                    <div class="grid">
+                `;
+
+                for (const result of results) {
+                    html += `
+                        <div class="card">
+                            <h3>${result.beach.name}</h3>
+                            <div class="score-badge ${getScoreClass(result.score)}">
+                                ${result.score}/100 ${getScoreText(result.score)}
+                            </div>
+                            <div class="data-row">
+                                <span class="label">🌊 Altura olas</span>
+                                <span class="value">${result.data.waveHeight.toFixed(1)} m</span>
+                            </div>
+                            <div class="data-row">
+                                <span class="label">⏱ Periodo</span>
+                                <span class="value">${result.data.wavePeriod.toFixed(0)} s</span>
+                            </div>
+                            <div class="data-row">
+                                <span class="label">🌬 Viento</span>
+                                <span class="value">${result.data.windSpeed.toFixed(0)} km/h</span>
+                            </div>
+                            <div class="data-row">
+                                <span class="label">🧭 Dirección viento</span>
+                                <span class="value">${result.data.windDirection.toFixed(0)}°</span>
+                            </div>
+                            <div class="data-row">
+                                <span class="label">🌊 Dir. olas</span>
+                                <span class="value">${result.data.waveDirection.toFixed(0)}°</span>
+                            </div>
+                        </div>
+                    `;
+                }
+
+                html += '</div>';
+                app.innerHTML = html;
+
+                const now = new Date().toLocaleString('es-ES');
+                document.getElementById('updateTime').textContent = `Última actualización: ${now} | Próxima actualización en 30 minutos`;
+            } catch (error) {
+                document.getElementById('app').innerHTML = `<div class="error">Error al cargar datos: ${error.message}</div>`;
+            }
+        }
+
+        updateData();
+        setInterval(updateData, 30 * 60 * 1000);
     </script>
 </body>
 </html>
