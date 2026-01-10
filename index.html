@@ -299,7 +299,10 @@
                                 waveHeight: data?.current?.wave_height || 0,
                 wavePeriod: data?.current?.wave_period || 0,
                                 windSpeed: data?.current?.wind_speed_10m || 0,
+                                windDir: data?.current?.wind_direction_10m || 0
+            });
         results.sort((a, b) => b.score - a.score);
+                    const best = results[0];
         
         let html = `
             <div class="best-spot">
