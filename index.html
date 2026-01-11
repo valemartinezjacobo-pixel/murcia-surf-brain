@@ -55,33 +55,48 @@
 </head>
 <body>
     <div class="container">
-        <h1>🏄‍♂️ CABO PALOS SURFING REPORT 🌊</h1>
+        <h1> CABO PALOS SURFING REPORT </h1>
         <p class="subtitle">Predicción en tiempo real de surf para las playas de Murcia</p>
         <div id="app"><div class="loading">Cargando datos...</div></div>
         <div class="meteo-section">
             <div class="meteo-title"><h2>📡 Modelos Meteorológicos</h2></div>
             <div class="meteo-grid">
                 <div class="meteo-card">
-                    <h3>🛰️ Satélite Mediterráneo</h3>
-                    <img src="https://www.aemet.es/imagenes_gcd/eltiempo/observacion/satelite/enhebdo.jpg" alt="Satélite Mediterráneo" onerror="this.src='https://via.placeholder.com/400x300?text=Imagen+no+disponible'">
-                    <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">Fuente: AEMET</p>
+                    <h3>Satélite Mediterráneo</h3>
+                    <a href="https://www.aemet.es/es/eltiempo/observacion/satelite/infra" target="_blank" rel="noopener">
+                        <img src="https://www.aemet.es/imagenes/png/sat/h24_rojo_sres_enh_gran_canaria____.png" alt="Satélite Mediterráneo" onerror="this.src='https://via.placeholder.com/400x300/4a90e2/ffffff?text=Satelite+AEMET'">
+                    </a>
+                    <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">Fuente: AEMET - Click para más información</p>
                 </div>
                 <div class="meteo-card">
-                    <h3>🌊 Estado del Mar (Oleaje)</h3>
-                    <img src="https://www.puertos.es/es-es/oceanografia/Paginas/portus/img/prediccion_es/24/ww3_24_00.jpg" alt="Estado del Mar" onerror="this.src='https://via.placeholder.com/400x300?text=Imagen+no+disponible'">
-                    <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">Fuente: Puertos del Estado</p>
+                    <h3>Estado del Mar (Oleaje)</h3>
+                    <a href="https://static.puertos.es/pred_simplificada/Predolas/mapas.html" target="_blank" rel="noopener">
+                        <img src="https://static.puertos.es/pred_simplificada/Predolas/Mapas/Med/hs00.gif" alt="Estado del Mar" onerror="this.src='https://via.placeholder.com/400x300/2c7fb8/ffffff?text=Oleaje+Puertos+del+Estado'">
+                    </a>
+                    <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">Fuente: Puertos del Estado - Click para más información</p>
                 </div>
                 <div class="meteo-card">
-                    <h3>💨 Viento en Superficie</h3>
-                    <img src="https://www.aemet.es/imagenes_d/eltiempo/prediccion/modelosmat/meteograma_04/gif/ens_hres_LEAL_10m_es.gif" alt="Viento en Superficie" onerror="this.src='https://via.placeholder.com/400x300?text=Imagen+no+disponible'">
-                    <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">Fuente: AEMET</p>
+                    <h3>Predicción Viento</h3>
+                    <a href="https://www.aemet.es/es/eltiempo/prediccion/maritima" target="_blank" rel="noopener">
+                        <img src="https://www.aemet.es/imagenes/png/mapas/viento/viento_2d.png" alt="Viento" onerror="this.src='https://via.placeholder.com/400x300/4a90e2/ffffff?text=Viento+AEMET'">
+                    </a>
+                    <p style="text-align: center; margin-top: 10px; font-size: 0.9em; color: #666;">Fuente: AEMET - Click para más información</p>
                 </div>
+            </div>                </div>
             </div>
         </div>
         <div class="footer">
-            <p style="margin-bottom: 15px; font-size: 1.1em;">📧 Contacto: <a href="mailto:garavide@hotmail.com">garavide@hotmail.com</a></p>
+            <p style="margin-bottom: 15px; font-size: 1.1em;">📧 Contacto:    Contacto: Contacto: <a href="mailto:garavide@hotmail.com">garavide@hotmail.com</a></p>
+            🌊 Visitas    Visitas
+            🏄    SURF:
+            ⚡    Altura
+            🌊    Periodo
+            🧭    Dirección
+            💨    Viento
+            📡 Modelos    Modelos
+            
             <div style="margin-top: 20px;">
-                <p style="margin-bottom: 10px; font-weight: bold;">🌊 Visitas totales:</p>
+                <p style="margin-bottom: 10px; font-weight: bold;"> Visitas totales:</p>
                 <div class="visit-counter"><span id="visit-count">0</span></div>
             </div>
         </div>
@@ -192,7 +207,7 @@
                     <span class="value">${beach.data.waveHeight.toFixed(2)}m</span>
                 </div>
                 <div class="data-row">
-                    <span class="label">🌊 Periodo:</span>
+                    <span class="label"> Periodo:</span>
                     <span class="value">${beach.data.wavePeriod.toFixed(1)}s</span>
                 </div>
                 <div class="data-row">
