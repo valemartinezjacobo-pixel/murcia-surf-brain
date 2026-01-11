@@ -188,4 +188,49 @@
                         <h3>${beach.name}</h3>
                         <div class="score-badge ${getScoreClass(beach.score)}">${beach.score}/100 ${getScoreText(beach.score)}</div>
                         <div class="data-row">
-                            <span
+                                            <span class="label">⚡ Altura Ola:</span>
+                    <span class="value">${beach.data.waveHeight.toFixed(2)}m</span>
+                </div>
+                <div class="data-row">
+                    <span class="label">🌊 Periodo:</span>
+                    <span class="value">${beach.data.wavePeriod.toFixed(1)}s</span>
+                </div>
+                <div class="data-row">
+                    <span class="label">🧭 Dirección Ola:</span>
+                    <span class="value">${beach.data.waveDirection.toFixed(0)}°</span>
+                </div>
+                <div class="data-row">
+                    <span class="label">💨 Viento:</span>
+                    <span class="value">${beach.data.windSpeed.toFixed(1)} km/h</span>
+                </div>
+                <div class="data-row">
+                    <span class="label">🧭 Dirección Viento:</span>
+                    <span class="value">${beach.data.windDirection.toFixed(0)}°</span>
+                </div>
+                <p style="margin-top: 15px; color: rgba(255,255,255,0.9); font-weight: 500;">${beach.region}</p>
+            </div>
+        `;
+    });
+
+    html += `</div>`;
+    
+    document.getElementById('app').innerHTML = html;
+}
+
+// Actualizar contador de visitas
+function updateVisitCounter() {
+    const visits = localStorage.getItem('visitCount') || 0;
+    const newVisits = parseInt(visits) + 1;
+    localStorage.setItem('visitCount', newVisits);
+    document.getElementById('visit-count').textContent = newVisits;
+}
+
+// Ejecutar al cargar
+updateApp();
+updateVisitCounter();
+
+// Actualizar cada 10 minutos
+setInterval(updateApp, 600000);
+    </script>
+</body>
+</html>
