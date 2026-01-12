@@ -41,16 +41,7 @@
         .score-ok { background: #FFC107; color: white; }
         .score-bad { background: #f44336; color: white; }
         .score-chusta { background: #9E9E9E; color: white; }
-        .meteo-section { margin-top: 40px; }
-        .meteo-title { background: rgba(255,255,255,0.95); border-radius: 15px; padding: 20px; text-align: center; margin-bottom: 20px; box-shadow: 0 5px 15px rgba(0,0,0,0.2); }
-        .meteo-title h2 { color: #f7931e; font-size: 2em; }
-        .meteo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 20px; margin-bottom: 30px; }
-        .meteo-card { background: rgba(255,255,255,0.95); border-radius: 15px; padding: 20px; box-shadow: 0 8px 20px rgba(0,0,0,0.25); }
-        .meteo-card h3 { color: #f7931e; margin-bottom: 15px; text-align: center; }
-        .meteo-card a { display: block; text-decoration: none; }
-        .meteo-card img { width: 100%; height: auto; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.2); display: block; cursor: pointer; transition: transform 0.2s; }
-        .meteo-card img:hover { transform: scale(1.02); }
-        .meteo-card p { text-align: center; margin-top: 10px; font-size: 0.9em; color: #666; }
+        
         .footer { background: rgba(0,0,0,0.2); border-radius: 15px; padding: 25px; text-align: center; color: white; margin-top: 30px; }
         .footer a { color: #fdc830; text-decoration: none; font-weight: bold; }
         .footer a:hover { text-decoration: underline; }
@@ -66,35 +57,12 @@
             <div class="loading">Cargando datos...</div>
         </div>
 
-        <div class="meteo-section">
-            <div class="meteo-title">
-                <h2>◉ Modelos Meteorológicos</h2>
-            </div>
-            <div class="meteo-grid">
-                <div class="meteo-card">
-                    <h3>Satélite Mediterráneo</h3>
-                    <a href="https://www.aemet.es/es/eltiempo/observacion/satelite/infra" target="_blank" rel="noopener">
-                        <img src="https://www.aemet.es/imagenes_d/eltiempo/observacion/satelite/sateliteOceanico.jpg" alt="Satélite Mediterráneo" onerror="this.src='https://via.placeholder.com/400x300/4a90e2/ffffff?text=Satélite+AEMET'">
-                    </a>
-                    <p>Fuente: AEMET - Click para más información</p>
-                </div>
-                
-                <div class="meteo-card">
-                    <h3>Estado del Mar (Oleaje)</h3>
-                    <a href="https://static.puertos.es/pred_simplificada/Predolas/mapas.html" target="_blank" rel="noopener">
-                        <img src="https://www.puertos.es/es-es/oceanografia/PublishingImages/portada/gif_previsor_12.gif" alt="Estado del Mar" onerror="this.src='https://via.placeholder.com/400x300/2c7fb8/ffffff?text=Oleaje+Puertos+Estado'">
-                    </a>
-                    <p>Fuente: Puertos del Estado - Click para más información</p>
-                </div>
-                
-                <div class="meteo-card">
-                    <h3>Predicción Viento</h3>
-                    <a href="https://www.aemet.es/es/eltiempo/prediccion/maritima" target="_blank" rel="noopener">
-                        <img src="https://www.aemet.es/imagenes_gcd/eltiempo/prediccion/mont/pv2_es1_ma2.gif" alt="Viento" onerror="this.src='https://via.placeholder.com/400x300/e67e22/ffffff?text=Viento+AEMET'">
-                    </a>
-                    <p>Fuente: AEMET - Click para más información</p>
-                </div>
-            </div>
+        <div class="webcam-section" style="background: rgba(255,255,255,0.95); border-radius: 15px; padding: 30px; text-align: center; margin: 40px 0; box-shadow: 0 8px 20px rgba(0,0,0,0.25);">
+            <a href="https://www.skylinewebcams.com/es/webcam/espana/murcia/cartagena/playa-de-la-manga.html" target="_blank" rel="noopener" style="display: inline-block; text-decoration: none;">
+                <button style="background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%); color: white; font-size: 1.5em; font-weight: bold; padding: 20px 40px; border: none; border-radius: 50px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3); transition: transform 0.2s, box-shadow 0.2s;" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.4)';" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 5px 15px rgba(0,0,0,0.3)';">
+                    🎥 Webcam Galúa
+                </button>
+            </a>
         </div>
 
         <div class="footer">
